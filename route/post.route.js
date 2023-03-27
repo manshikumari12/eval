@@ -92,7 +92,23 @@ const PostRouter = express.Router();
         console.log(error)
       }
   })
-
+  //maximum no. of Comment keep the route as /posts/top
+  PostRouter.get('/top', async (req, res) => {
+      try {
+        
+        const posts = await PostsModel.find({});
+    
+        
+        const sorted = posts.sort((a, b) => b.no_of_comments - a.no_of_comments);
+    
+      //**here if want to show the 1 result than put this over res res.send(sorted[i]);
+        res.send(sorted);
+      } catch (err) {
+        console.error(err);
+        res.status(500).send({ error: 'Server error' });
+      //   console.log(err);
+      }
+    });
 
 
 
